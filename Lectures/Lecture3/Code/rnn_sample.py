@@ -5,6 +5,8 @@ from keras.models import Sequential
 from keras.layers import SimpleRNN,Dropout,Dense
 from sklearn.preprocessing import MinMaxScaler
 
+# tokenizaiton
+
 #Read data
 dataset_train = pd.read_csv('passengers_ds.csv')
 train = dataset_train.loc[:, ['total_passengers']].values
