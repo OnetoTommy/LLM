@@ -59,8 +59,9 @@ result = []
 # for i in range(2):
 for window in win_size:
     for vector in vector_size:
+# for window, vector in zip(win_size, vector_size):
         model = Word2Vec(sentences=corpus, window=window, vector_size=vector,
-                         sg=1, epochs=2, min_count=10)
+                         sg=1, epochs=2, min_count=5)
         if all(word in model.wv for word in ['man', 'woman', 'daughter']):
             transform = model.wv['man'] - model.wv['woman']
             target_vec = transform + model.wv["daughter"]
@@ -83,16 +84,16 @@ for window in win_size:
             cluster_labels = list(km.labels_)
             cluster_score = score_clustering(cluster_labels, avail_words)
 
-        # Append the result
-        result.append({
-            "window": window,
-            "vector_size": vector,
-            "analogy_rank_son": analogy_rank,
-            "analogy_top10": analogy_top,
-            "cluster_words": avail_words,
-            "cluster_labels": cluster_labels,
-            "cluster_score": cluster_score
-        })
+    # Append the result
+    result.append({
+        "window": window,
+        "vector_size": vector,
+        "analogy_rank_son": analogy_rank,
+        "analogy_top10": analogy_top,
+        "cluster_words": avail_words,
+        "cluster_labels": cluster_labels,
+        "cluster_score": cluster_score
+    })
 
 # Select the Best result
 best = min(result, key=lambda r: (r["analogy_rank_son"], -r["cluster_score"]))
